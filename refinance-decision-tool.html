@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refinance Decision Tool - JP Gooden | American Financial Network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .headshot {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #2563eb;
+        }
+
+        .header-text h1 {
+            color: #1e40af;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header-text h2 {
+            color: #64748b;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .header-text h3 {
+            color: #2563eb;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .calculator-interface {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .calculate-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .calculate-button:hover {
+            background: #1d4ed8;
+        }
+
+        .results {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .results h4 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .recommendation {
+            background: #eff6ff;
+            border: 2px solid #2563eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .recommendation.good {
+            background: #f0fdf4;
+            border-color: #10b981;
+        }
+
+        .recommendation.poor {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        .recommendation h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .recommendation.good h3 {
+            color: #059669;
+        }
+
+        .recommendation.poor h3 {
+            color: #dc2626;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-card h4 {
+            color: #2563eb;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-button {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: #1d4ed8;
+        }
+
+        .more-tools {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .more-tools a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .more-tools a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiByeD0iNTAiIGZpbGw9IiMyNTYzZWIiLz4KPHRleHQgeD0iNTAiIHk9IjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iYm9sZCI+SlA8L3RleHQ+Cjwvc3ZnPgo=" alt="JP Gooden" class="headshot">
+                <div class="header-text">
+                    <h1>JP Gooden</h1>
+                    <h2>Loan Officer - American Financial Network</h2>
+                    <h3>📍 19 South Main St., Yardley PA 19067</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Refinance Decision Tool -->
+        <div class="calculator-interface">
+            <h2 style="color: #1e40af; margin-bottom: 20px;">🔄 Refinance Decision Tool</h2>
+            <p style="color: #64748b; margin-bottom: 30px;">Determine if refinancing makes financial sense for your situation. Get a clear break-even analysis and total savings calculation.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3 style="color: #2563eb; margin-bottom: 15px;">Current Mortgage</h3>
+                    <div class="input-group">
+                        <label>Current Loan Balance</label>
+                        <input type="number" id="current-balance" value="250000" oninput="calculateRefinance()">
+                    </div>
+                    <div class="input-group">
+                        <label>Current Interest Rate (%)</label>
+                        <input type="number" id="current-rate" value="7.25" step="0.125" oninput="calculateRefinance()">
+                    </div>
+                    <div class="input-group">
+                        <label>Years Remaining on Current Loan</label>
+                        <input type="number" id="years-remaining" value="25" oninput="calculateRefinance()">
+                    </div>
+                    
+                    <h3 style="color: #2563eb; margin-bottom: 15px; margin-top: 25px;">New Loan Terms</h3>
+                    <div class="input-group">
+                        <label>New Interest Rate (%)</label>
+                        <input type="number" id="new-rate" value="6.5" step="0.125" oninput="calculateRefinance()">
+                    </div>
+                    <div class="input-group">
+                        <label>New Loan Term (Years)</label>
+                        <input type="number" id="new-term" value="30" oninput="calculateRefinance()">
+                    </div>
+                    <div class="input-group">
+                        <label>Refinance Closing Costs</label>
+                        <input type="number" id="closing-costs" value="5000" oninput="calculateRefinance()">
+                    </div>
+                    <button class="calculate-button" onclick="calculateRefinance()">Analyze Refinance</button>
+                </div>
+                <div id="refinance-results" class="results">
+                    <h4>Refinance Analysis</h4>
+                    <div id="refinance-breakdown"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- More Tools -->
+        <div class="more-tools">
+            <h4 style="color: #1e40af; margin-bottom: 10px;">Need More Mortgage Tools?</h4>
+            <p><a href="jp-gooden-mortgage-calculators.html">← Back to All Calculators</a></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMzIiIGZpbGw9IiMyNTYzZWIiLz4KPHRleHQgeD0iMzIiIHk9IjQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+SlA8L3RleHQ+Cjwvc3ZnPgo=" alt="JP Gooden" style="width: 64px; height: 64px; border-radius: 50%;">
+                <div>
+                    <h4 style="color: #1e40af; margin-bottom: 5px;">Ready to Refinance?</h4>
+                    <p style="color: #64748b; margin: 0;">Let's discuss if refinancing is the right move for you!</p>
+                </div>
+            </div>
+            
+            <div class="contact-buttons">
+                <a href="tel:+1234567890" class="contact-button">📞 Call JP</a>
+                <a href="sms:+1234567890" class="contact-button">💬 Text JP</a>
+                <a href="mailto:jp.gooden@afn.com" class="contact-button">✉️ Email JP</a>
+            </div>
+            
+            <div style="color: #64748b; font-style: italic; margin-bottom: 15px;">
+                "Helping you make smart refinancing decisions."
+            </div>
+            
+            <div style="color: #9ca3af; font-size: 0.9rem;">
+                Refinance Decision Tool by JP Gooden, American Financial Network
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function calculateMonthlyPayment(principal, rate, years) {
+            const monthlyRate = rate / 100 / 12;
+            const numPayments = years * 12;
+            
+            if (monthlyRate === 0) {
+                return principal / numPayments;
+            }
+            
+            return principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
+                   (Math.pow(1 + monthlyRate, numPayments) - 1);
+        }
+
+        function calculateRefinance() {
+            const currentBalance = parseFloat(document.getElementById('current-balance').value) || 0;
+            const currentRate = parseFloat(document.getElementById('current-rate').value) || 0;
+            const yearsRemaining = parseFloat(document.getElementById('years-remaining').value) || 0;
+            const newRate = parseFloat(document.getElementById('new-rate').value) || 0;
+            const newTerm = parseFloat(document.getElementById('new-term').value) || 0;
+            const closingCosts = parseFloat(document.getElementById('closing-costs').value) || 0;
+
+            // Calculate current monthly payment
+            const currentMonthlyPayment = calculateMonthlyPayment(currentBalance, currentRate, yearsRemaining);
+            
+            // Calculate new monthly payment
+            const newMonthlyPayment = calculateMonthlyPayment(currentBalance, newRate, newTerm);
+            
+            // Calculate monthly savings
+            const monthlySavings = currentMonthlyPayment - newMonthlyPayment;
+            
+            // Calculate break-even point
+            const breakEvenMonths = closingCosts / Math.abs(monthlySavings);
+            const breakEvenYears = breakEvenMonths / 12;
+            
+            // Calculate total interest savings over remaining term
+            const currentTotalInterest = (currentMonthlyPayment * yearsRemaining * 12) - currentBalance;
+            const newTotalInterest = (newMonthlyPayment * newTerm * 12) - currentBalance;
+            const interestSavings = currentTotalInterest - newTotalInterest;
+            
+            // Calculate net savings (interest savings minus closing costs)
+            const netSavings = interestSavings - closingCosts;
+            
+            // Calculate total savings over time periods
+            const savings5Years = (monthlySavings * 60) - closingCosts;
+            const savings10Years = (monthlySavings * 120) - closingCosts;
+            
+            // Determine recommendation
+            const isGoodDeal = monthlySavings > 0 && breakEvenYears <= 3;
+            const rateDifference = currentRate - newRate;
+
+            let breakdown = `
+                <div class="recommendation ${isGoodDeal ? 'good' : (monthlySavings > 0 ? '' : 'poor')}">
+                    <h3>${isGoodDeal ? '✅ REFINANCE RECOMMENDED' : 
+                         (monthlySavings > 0 ? '⚠️ MARGINAL BENEFIT' : '❌ NOT RECOMMENDED')}</h3>
+                    <p>${monthlySavings > 0 ? 
+                        `Monthly savings: <strong>${formatCurrency(monthlySavings)}</strong><br>Break-even: <strong>${breakEvenYears.toFixed(1)} years</strong>` :
+                        `Monthly payment would <strong>increase</strong> by ${formatCurrency(Math.abs(monthlySavings))}`
+                    }</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>📊 Current Loan</h4>
+                        <p><strong>Balance:</strong> ${formatCurrency(currentBalance)}</p>
+                        <p><strong>Interest Rate:</strong> ${currentRate}%</p>
+                        <p><strong>Monthly Payment:</strong> ${formatCurrency(currentMonthlyPayment)}</p>
+                        <p><strong>Years Remaining:</strong> ${yearsRemaining}</p>
+                        <p><strong>Total Interest Remaining:</strong> ${formatCurrency(currentTotalInterest)}</p>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h4>🔄 New Loan</h4>
+                        <p><strong>Balance:</strong> ${formatCurrency(currentBalance)}</p>
+                        <p><strong>Interest Rate:</strong> ${newRate}%</p>
+                        <p><strong>Monthly Payment:</strong> ${formatCurrency(newMonthlyPayment)}</p>
+                        <p><strong>Loan Term:</strong> ${newTerm} years</p>
+                        <p><strong>Total Interest:</strong> ${formatCurrency(newTotalInterest)}</p>
+                        <p><strong>Closing Costs:</strong> ${formatCurrency(closingCosts)}</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 8px;">
+                    <strong>Financial Impact Summary:</strong><br>
+                    • Rate reduction: ${rateDifference.toFixed(3)}% (${rateDifference > 0 ? 'decrease' : 'increase'})<br>
+                    • Monthly payment change: ${monthlySavings >= 0 ? '+' : ''}${formatCurrency(monthlySavings)}<br>
+                    • Break-even point: ${breakEvenYears.toFixed(1)} years (${breakEvenMonths.toFixed(0)} months)<br>
+                    • Total interest savings: ${formatCurrency(interestSavings)}<br>
+                    • Net savings after closing costs: ${formatCurrency(netSavings)}<br><br>
+                    
+                    <strong>Savings Timeline:</strong><br>
+                    • After 5 years: ${formatCurrency(savings5Years)}<br>
+                    • After 10 years: ${formatCurrency(savings10Years)}<br>
+                    • Over full loan term: ${formatCurrency(netSavings)}
+                </div>
+
+                <div style="margin-top: 15px; padding: 15px; background: ${isGoodDeal ? '#f0fdf4' : '#fef3c7'}; border-radius: 8px; color: ${isGoodDeal ? '#166534' : '#92400e'};">
+                    <strong>Recommendation Factors:</strong><br>
+                    ${isGoodDeal ? 
+                        '• Significant monthly savings with reasonable break-even period<br>• Good rate reduction makes refinancing worthwhile<br>• Consider refinancing if you plan to stay in the home beyond the break-even point' :
+                        monthlySavings > 0 ?
+                        '• Modest savings with longer break-even period<br>• Consider your long-term plans and other financial goals<br>• May be worth it if you plan to stay long-term' :
+                        '• Monthly payment would increase<br>• Not financially beneficial unless you need to change loan terms<br>• Consider other options like loan modification'
+                    }
+                </div>
+
+                <div style="margin-top: 15px; padding: 15px; background: #f8fafc; border-radius: 8px; color: #374151;">
+                    <strong>Additional Considerations:</strong><br>
+                    • Cash-out refinancing options for home improvements or debt consolidation<br>
+                    • Switching from adjustable to fixed rate for payment stability<br>
+                    • Removing PMI if home value has increased significantly<br>
+                    • Impact on tax deductions and overall financial strategy<br>
+                    • Current market conditions and rate trends
+                </div>
+
+                <div style="margin-top: 15px; padding: 15px; background: #eff6ff; border-radius: 8px; color: #1e40af;">
+                    <strong>Calculation Method:</strong><br>
+                    Monthly Savings = Current Payment - New Payment<br>
+                    Break-Even = Closing Costs ÷ Monthly Savings<br>
+                    Interest Savings = (Current Total Interest) - (New Total Interest)<br>
+                    Net Savings = Interest Savings - Closing Costs
+                </div>
+            `;
+
+            document.getElementById('refinance-breakdown').innerHTML = breakdown;
+        }
+
+        // Initialize calculation
+        calculateRefinance();
+    </script>
+</body>
+</html>
+
