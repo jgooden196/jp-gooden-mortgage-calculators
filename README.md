@@ -7,7 +7,7 @@
 
 This repository contains a comprehensive suite of professional mortgage calculators designed to help clients make informed home buying decisions.
 
-### 🎯 Available Calculators
+### 🎯 Available Calculators 
 
 1. **💰 Payment Calculator Pro** - Complete monthly payment analysis including P&I, taxes, insurance, and PMI
 2. **🏠 Affordability Analyzer** - Determine maximum home purchase price using industry-standard debt-to-income ratios
